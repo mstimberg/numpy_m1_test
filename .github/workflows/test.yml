@@ -1,0 +1,24 @@
+name: test numpy.ftt
+
+on: push
+
+jobs:
+  install_and_test:
+    name: "Install and test numpy"
+    runs-on: macOS-14
+    steps:
+      - name: "Install Python"
+        id: python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+          allow-prereleases: true
+      - name: "Install numpy"
+        run: |
+          ${{ steps.python.outputs.python-path }} -m pip install --upgrade pip setuptools
+          ${{ steps.python.outputs.python-path }} -m pip install --pre \
+            -i https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \
+            numpy
+      - name: "import numpy.fft"
+        run: python -c 'import numpy.fft'
+
