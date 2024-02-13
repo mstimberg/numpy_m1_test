@@ -19,6 +19,10 @@ jobs:
           ${{ steps.python.outputs.python-path }} -m pip install --pre \
             -i https://pypi.anaconda.org/scientific-python-nightly-wheels/simple \
             numpy
+      - name: "Version/runtime information"
+        run: |
+          python -c "import sys, numpy; print(numpy.__version__); print(sys.version)"
+          python -m pip install threadpoolctl
+          python -c "import numpy; print(numpy.show_runtime())"
       - name: "import numpy.fft"
         run: python -c 'import numpy.fft'
-
